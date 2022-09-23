@@ -48,7 +48,7 @@ class Note extends HiveObject {
     DateTime? creationDate,
     DateTime? lastEditionDate,
     this.color = const Color.fromARGB(255, 255, 255, 255),
-    this.secondColor = const Color.fromARGB(255, 0, 0, 0),
+    this.secondColor = const Color.fromARGB(255, 255, 255, 255),
     this.textColor = const Color.fromARGB(255, 0, 0, 0),
   }) {
     this.creationDate = creationDate ?? DateTime.now();

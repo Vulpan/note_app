@@ -39,7 +39,7 @@ class NoteApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Note App',
+        onGenerateTitle: (context) => AppLocalizations.of(context).appName,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         theme: ThemeData(

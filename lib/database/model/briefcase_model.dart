@@ -54,7 +54,7 @@ class Briefcase extends HiveObject {
     DateTime? creationDate,
     DateTime? lastEditionDate,
     this.color = const Color.fromARGB(255, 255, 255, 255),
-    this.secondColor = const Color.fromARGB(255, 0, 0, 0),
+    this.secondColor = const Color.fromARGB(255, 255, 255, 255),
     this.textColor = const Color.fromARGB(255, 0, 0, 0),
     this.iconColor = const Color.fromARGB(255, 255, 208, 0),
   }) {

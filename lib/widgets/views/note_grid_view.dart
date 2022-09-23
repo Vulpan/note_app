@@ -54,8 +54,8 @@ class _NoteGridViewState extends State<NoteGridView> {
               });
             } else {
               Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => NoteDetalisScreen(note: widget.note),
+                Utils().circularPageRoute(
+                  NoteDetalisScreen(note: widget.note),
                 ),
               );
             }
@@ -83,7 +83,9 @@ class _NoteGridViewState extends State<NoteGridView> {
                     : widget.note.color,
                 boxShadow: [
                   BoxShadow(
-                    color: widget.note.secondColor.withOpacity(0.6),
+                    color: widget.note.secondColor == Colors.white
+                        ? Colors.black
+                        : widget.note.secondColor.withOpacity(0.6),
                     offset: const Offset(1, 1),
                     blurRadius: 1,
                   ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -9,6 +10,7 @@ import 'package:note_app/screen/new_briefcase_screen.dart';
 import 'package:note_app/screen/note_detalis_screen.dart';
 import 'package:note_app/utils/providers/item_selected_provider.dart';
 import 'package:note_app/utils/text_styles.dart';
+import 'package:note_app/utils/utils.dart';
 import 'package:note_app/widgets/dobule_value_listenable_builder.dart';
 import 'package:note_app/widgets/search_bar.dart';
 import 'package:note_app/widgets/views/briefcase_grid_view.dart';
@@ -52,12 +54,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 firstValue: BriefcaseRepository.getBoxListenable(),
                 secondValue: NoteRepository.getBoxListenable(),
                 builder: (context, first, second, child) {
-                  List list = elementList;
+                  List list;
+                  List newList = combineList();
+
+                  if (listEquals(elementList, newList)) {
+                    list = elementList;
+                  } else {
+                    list = newList;
+                    elementList = newList;
+                  }
+
                   list.sort(
                     (a, b) {
                       return b.lastEditionDate.compareTo(a.lastEditionDate);
                     },
                   );
+
                   return StaggeredGrid.count(
                     crossAxisSpacing: 4,
                     mainAxisSpacing: 4,
@@ -85,8 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => NoteDetalisScreen(
+            Utils().circularPageRoute(
+              NoteDetalisScreen(
                 note: Note.empty(),
                 isNew: true,
               ),
@@ -294,8 +306,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => NewBriefcaseScreen(
+                    Utils().circularPageRoute(
+                      NewBriefcaseScreen(
                         briefcase: Briefcase.empty(
                           title: AppLocalizations.of(context).exampleText,
                         ),

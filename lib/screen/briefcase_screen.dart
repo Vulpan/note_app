@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -54,12 +55,22 @@ class _BriefcaseScreenState extends State<BriefcaseScreen> {
             child: ValueListenableBuilder(
               valueListenable: NoteRepository.getBoxListenable(),
               builder: (context, value, child) {
-                List list = elementList;
+                List list;
+                List newList = widget.briefcase.notes;
+
+                if (listEquals(elementList, newList)) {
+                  list = elementList;
+                } else {
+                  list = newList;
+                  elementList = newList;
+                }
+
                 list.sort(
                   (a, b) {
                     return b.lastEditionDate.compareTo(a.lastEditionDate);
                   },
                 );
+
                 return StaggeredGrid.count(
                   crossAxisSpacing: 4,
                   mainAxisSpacing: 4,
@@ -82,8 +93,8 @@ class _BriefcaseScreenState extends State<BriefcaseScreen> {
               onPressed: () {
                 briefcaseNoteProvider.currentBriefcase = widget.briefcase.id;
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => NoteDetalisScreen(
+                  Utils().circularPageRoute(
+                    NoteDetalisScreen(
                       note: Note.empty(),
                       isNew: true,
                     ),
@@ -103,7 +114,9 @@ class _BriefcaseScreenState extends State<BriefcaseScreen> {
   AppBar getAppBar(BuildContext context, ItemSelectedProvider isp) {
     return AppBar(
       title: getAppBarTitle(context),
-      backgroundColor: widget.briefcase.secondColor,
+      backgroundColor: widget.briefcase.secondColor == Colors.white
+          ? Colors.blue
+          : widget.briefcase.secondColor,
       leading: IconButton(
         onPressed: () {
           briefcaseNoteProvider.currentBriefcase = -1;

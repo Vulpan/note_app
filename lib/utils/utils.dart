@@ -1,3 +1,4 @@
+import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -24,7 +25,7 @@ class Utils {
   ];
 
   List<Color> secondColors = [
-    const Color.fromARGB(255, 0, 0, 0),
+    const Color.fromARGB(255, 255, 255, 255),
     const Color(0xFFFF5252),
     const Color(0xFFFF4081),
     const Color(0xFFE040FB),
@@ -91,5 +92,18 @@ class Utils {
     if (!cf.hasPrimaryFocus) {
       cf.unfocus();
     }
+  }
+
+  PageRoute circularPageRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return CircularRevealAnimation(
+          animation: animation,
+          centerAlignment: Alignment.bottomCenter,
+          child: child,
+        );
+      },
+    );
   }
 }

@@ -46,6 +46,9 @@ class _NoteDetalisScreenState extends State<NoteDetalisScreen> {
     briefcaseId = briefcaseNoteProvider.currentBriefcase;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: widget.note.secondColor == Colors.white
+            ? Colors.blue
+            : widget.note.secondColor,
         leading: IconButton(
           onPressed: () {
             Utils().closeKeyboard(context);
@@ -141,7 +144,9 @@ class _NoteDetalisScreenState extends State<NoteDetalisScreen> {
           ),
         ),
       ),
-      body: Container(
+      body: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInSine,
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(color: widget.note.color),
         child: Column(

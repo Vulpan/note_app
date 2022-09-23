@@ -5,6 +5,7 @@ import 'package:note_app/screen/briefcase_screen.dart';
 import 'package:note_app/utils/providers/briefcase_note_provider.dart';
 import 'package:note_app/utils/providers/item_selected_provider.dart';
 import 'package:note_app/utils/text_styles.dart';
+import 'package:note_app/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class BriefcaseGridView extends StatefulWidget {
@@ -58,9 +59,8 @@ class _BriefcaseGridViewState extends State<BriefcaseGridView> {
               briefcaseNoteProvider.currentBriefcase = widget.briefcase.id;
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      BriefcaseScreen(briefcase: widget.briefcase),
+                Utils().circularPageRoute(
+                  BriefcaseScreen(briefcase: widget.briefcase),
                 ),
               );
             }
@@ -88,7 +88,9 @@ class _BriefcaseGridViewState extends State<BriefcaseGridView> {
                     : widget.briefcase.color,
                 boxShadow: [
                   BoxShadow(
-                    color: widget.briefcase.secondColor.withOpacity(0.6),
+                    color: widget.briefcase.secondColor == Colors.white
+                        ? Colors.black
+                        : widget.briefcase.secondColor.withOpacity(0.6),
                     offset: const Offset(1, 1),
                     blurRadius: 1,
                   ),
